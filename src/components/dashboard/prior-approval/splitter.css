@@ -1,0 +1,26 @@
+.splitter {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.pane {
+  overflow: auto;
+}
+
+.left-pane {
+  background-color: #f0f0f0;
+}
+
+.right-pane {
+  background-color: #e0e0e0;
+}
+
+.divider {
+  width: 5px;
+  background-color: #aaa;
+  cursor: ew-resize;
+  position: relative;
+  z-index: 1;
+}
