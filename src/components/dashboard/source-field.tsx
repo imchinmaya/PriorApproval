@@ -20,7 +20,7 @@ import { FieldTypes } from './prior-approval/field-types';
 const style: CSSProperties = {
   border: '1px dashed gray',
   backgroundColor: 'white',
-  padding: '0.2rem',
+  padding: '1px 5px',
   marginRight: '0.2rem',
   marginBottom: '0.2rem',
   cursor: 'move',
@@ -47,8 +47,8 @@ export const SourceField: FC<SourceFieldProps> = memo(function Box({ name, type,
 
   return (
     <ListItem disablePadding ref={drag} style={{ ...style, opacity }} data-testid="box">
-      <ListItemButton>
-        <ListItemIcon>
+      <ListItemButton sx={{'padding': '1px 5px'}}>
+        <ListItemIcon sx={{'min-width': '36px'}}>
           {(type == FieldTypes.Text) && <FontDownloadIcon />}
           {(type == FieldTypes.Date) && <DateRangeIcon />}
           {(type == FieldTypes.Number) && <PinIcon />}
