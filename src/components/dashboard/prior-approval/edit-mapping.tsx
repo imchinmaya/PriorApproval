@@ -150,10 +150,10 @@ export function EditMapping(): React.JSX.Element {
     //   event.preventDefault();
     // }}
     >
-      <Card>
+      {/* <Card>
         <CardHeader subheader="Update mapping between source and target fiels" title="Edit Mapping" />
         <Divider />
-        <CardContent>
+        <CardContent> */}
           <div
             className="splitter"
             onMouseMove={handleMouseMove}
@@ -162,7 +162,7 @@ export function EditMapping(): React.JSX.Element {
           >
             <DndProvider backend={HTML5Backend}>
               <div className="pane left-pane" style={{ width: leftWidth }}>
-                <div>Resources</div>
+                {/* <div>Resources</div> */}
                 <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                   <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                     <Typography>Inputs</Typography>
@@ -241,8 +241,8 @@ export function EditMapping(): React.JSX.Element {
             </DndProvider>
 
           </div>
-        </CardContent>
-      </Card>
+        {/* </CardContent>
+      </Card> */}
     </form>
   );
 }
