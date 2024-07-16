@@ -20,7 +20,7 @@ import { FieldTypes } from './prior-approval/field-types';
 const style: CSSProperties = {
   border: '1px dashed gray',
   backgroundColor: 'white',
-  padding: '1px 5px',
+  padding: '1px',
   marginRight: '0.2rem',
   marginBottom: '0.2rem',
   cursor: 'move',
@@ -46,16 +46,25 @@ export const SourceField: FC<SourceFieldProps> = memo(function Box({ name, type,
   )
 
   return (
-    <ListItem disablePadding ref={drag} style={{ ...style, opacity }} data-testid="box">
-      <ListItemButton sx={{'padding': '1px 5px'}}>
-        <ListItemIcon sx={{'min-width': '36px'}}>
+    
+    <ListItem disablePadding style={{ ...style, opacity }}>
+      <div style={{'width': '100%', 'display':'flex', 'alignItems': 'center', 'padding': '5px 10px'}} ref={drag}  data-testid="box">
           {(type == FieldTypes.Text) && <FontDownloadIcon />}
           {(type == FieldTypes.Date) && <DateRangeIcon />}
           {(type == FieldTypes.Number) && <PinIcon />}
+
+          <span style={{'marginLeft': '10px'}}>{name}</span>
+      {/* <ListItemButton sx={{'padding': '1px 5px'}}>
+        <ListItemIcon sx={{'min-width': '36px'}}>
+        
+          
+          
         </ListItemIcon>
-        <ListItemText primary={name} />
-      </ListItemButton>
+        <ListItemText primary={name} /> 
+      </ListItemButton>*/}
+      </div>
     </ListItem>
+    
 
     // <div ref={drag} style={{ ...style, opacity }} data-testid="box">
     //   {isDropped ? <s>{name}</s> : name}
