@@ -20,3 +20,14 @@ export interface StepValidation{
   validate: () => Promise<boolean>;
 }
 
+export interface SourceFieldType{
+  type: string;
+  label: string;
+}
+
+export interface TargetFieldType{
+  name: string;
+  type: string;
+  bindedFields: string[];
+  expression: string;
+}

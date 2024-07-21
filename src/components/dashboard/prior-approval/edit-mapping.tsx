@@ -19,74 +19,16 @@ import { TargetField } from "./target-field";
 import { FieldTypes } from "./field-types";
 import ExpandMoreIcon  from "@mui/icons-material/ExpandMore";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import { SourceFieldType, TargetFieldType } from './interfaces/prior-approval-infaces';
 
-function createData(
-  name: string,
-  type: string,
-  bindedFields: string[],
-  expression: string
-) {
-  return { name, type, bindedFields, expression };
+interface EditMappingProps {
+  sourceFields: SourceFieldType[]; // { type: string, label: string }[],
+  targetFields: TargetFieldType[];
 }
 
+export function EditMapping({sourceFields, targetFields}: EditMappingProps): React.JSX.Element {
+  const [targetFieldList, setTargetFieldList] = useState<TargetFieldType[]>(targetFields);
 
-export interface TargetFeildState {
-  name: string,
-  type: string,
-  //allowedDropEffect: string,
-  bindedFields: string[],
-  expression: string,
-}
-
-
-// const rows = [
-//   createData('RECORD_ID', FieldTypes.Number, ['avc'], ''),
-//   createData('RECORD_TYPE', FieldTypes.Text, [], ''),
-//   createData('MEMBER_ID', FieldTypes.Text, [], ''),
-//   createData('CARRIER_ID', FieldTypes.Text, [], ''),
-//   createData('ACCOUNT_ID', FieldTypes.Text, [], ''),
-//   createData('GROUP_ID', FieldTypes.Text, [], ''),
-//   createData('PA_NUMBER', FieldTypes.Text, [], ''),
-//   createData('EFFECTIVE_DATE', FieldTypes.Date, [], ''),
-// ];
-
-const sourceFields = [
-  { type: FieldTypes.Number, label: "RECORD_ID" },
-  { type: FieldTypes.Text, label: "Record_Type" },
-  { type: FieldTypes.Text, label: "Member_Number" },
-  { type: FieldTypes.Text, label: "Group_Number" },
-  { type: FieldTypes.Text, label: "Person_Number" },
-  { type: FieldTypes.Text, label: "Relationship" },
-  { type: FieldTypes.Date, label: "Date_of_Birth" },
-  { type: FieldTypes.Text, label: "Patient_Sex" },
-  { type: FieldTypes.Text, label: "Drug_Type" },
-  { type: FieldTypes.Text, label: "Drug_Number" },
-  { type: FieldTypes.Number, label: "Filter" },
-  { type: FieldTypes.Text, label: "Cat_Code" },
-  { type: FieldTypes.Number, label: "Rule_ID" },
-]
-
-//configParameters: DefineConfigParametersProps, updateWizardData: (step: string, key: string, value: string) => void 
-//export const DefineConfigParameters = React.forwardRef((props: { }, ref: React.Ref<StepValidation>) => {
-export function EditMapping(): React.JSX.Element {
-  // const useStyles = makeStyles({
-  //   table: {
-  //     minWidth: 650,
-  //     "& .MuiTableCell-root": {
-  //       borderLeft: "1px solid rgba(224, 224, 224, 1)"
-  //     }
-  //   }
-  // });
-  const [targetFields, setTargetFields] = useState<TargetFeildState[]>([
-    createData('RECORD_ID', FieldTypes.Number, [], ''),
-    createData('RECORD_TYPE', FieldTypes.Text, [], ''),
-    createData('MEMBER_ID', FieldTypes.Text, [], ''),
-    createData('CARRIER_ID', FieldTypes.Text, [], ''),
-    createData('ACCOUNT_ID', FieldTypes.Text, [], ''),
-    createData('GROUP_ID', FieldTypes.Text, [], ''),
-    createData('PA_NUMBER', FieldTypes.Text, [], ''),
-    createData('EFFECTIVE_DATE', FieldTypes.Date, [], ''),
-  ])
   const [droppedBoxNames, setDroppedBoxNames] = useState<string[]>([])
 
   function isDropped(boxName: string) {
@@ -127,9 +69,9 @@ export function EditMapping(): React.JSX.Element {
         update(droppedBoxNames, name ? { $push: [name] } : { $push: [] }),
       )
       console.log('targetFields->', targetFields)
-      let tf = targetFields;
+      let tf = targetFieldList;
       tf[index].bindedFields.push(name);
-      setTargetFields(tf);
+      setTargetFieldList(tf);
       // setTargetFields(
       //   update(targetFields, {
       //     [index]: {
@@ -140,7 +82,7 @@ export function EditMapping(): React.JSX.Element {
       //   }),
       // )
     },
-    [droppedBoxNames, targetFields],
+    [droppedBoxNames, targetFieldList],
   )
   // const classes = useStyles();
   // Render the form
@@ -150,10 +92,6 @@ export function EditMapping(): React.JSX.Element {
     //   event.preventDefault();
     // }}
     >
-      {/* <Card>
-        <CardHeader subheader="Update mapping between source and target fiels" title="Edit Mapping" />
-        <Divider />
-        <CardContent> */}
           <div
             className="splitter"
             onMouseMove={handleMouseMove}
@@ -177,16 +115,6 @@ export function EditMapping(): React.JSX.Element {
                             isDropped={isDropped(fld.label)}
                             key={index}
                           />
-                          // <ListItem disablePadding>
-                          //   <ListItemButton>
-                          //     <ListItemIcon>
-                          //       {(fld.type == FieldTypes.Text) && <FontDownloadIcon />}
-                          //       {(fld.type == 'date') && <DateRangeIcon />}
-                          //       {(fld.type == 'pin') && <PinIcon />}
-                          //     </ListItemIcon>
-                          //     <ListItemText primary={fld.label} />
-                          //   </ListItemButton>
-                          // </ListItem>
                         ))}
                       </List>
                     </Typography>
@@ -207,7 +135,7 @@ export function EditMapping(): React.JSX.Element {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {targetFields.map((row, index) => (
+                      {targetFieldList.map((row, index) => (
                         <TableRow
                           key={row.name}
                           sx={{ 'height': '40px', 'td, th': { padding: '1px 10px', border: 1, borderColor: 'lightgray' } }}

@@ -9,11 +9,15 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Link, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { EditMapping } from './edit-mapping';
+import { SourceFieldType, TargetFieldType } from './interfaces/prior-approval-infaces';
+import { FieldTypes } from './field-types';
 
 export function MappingRules(): React.JSX.Element {
     const [open, setOpen] = React.useState(false);
     const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
     const [currentEditingRule, setCurrentEditingRule] = React.useState('');
+    const [sourceFields, setSourceFields] = React.useState<SourceFieldType[]>([]);
+    const [targetFields, setTargetFields] = React.useState<TargetFieldType[]>([]);
 
     // Handlers for form controls
     const handleInputChange = (event: any) => {
@@ -21,8 +25,104 @@ export function MappingRules(): React.JSX.Element {
 
     };
 
+
+    const rl1SourceFields: SourceFieldType[] = [
+        { type: FieldTypes.Number, label: "RECORD_ID" },
+        { type: FieldTypes.Text, label: "Record_Type" },
+        { type: FieldTypes.Text, label: "Member_Number" },
+        { type: FieldTypes.Text, label: "Group_Number" },
+        { type: FieldTypes.Text, label: "Person_Number" },
+        { type: FieldTypes.Text, label: "Relationship" },
+        { type: FieldTypes.Date, label: "Date_of_Birth" },
+        { type: FieldTypes.Text, label: "Patient_Sex" },
+        { type: FieldTypes.Text, label: "Drug_Type" },
+        { type: FieldTypes.Text, label: "Drug_Number" },
+        { type: FieldTypes.Number, label: "Filter" },
+        { type: FieldTypes.Text, label: "Cat_Code" },
+        { type: FieldTypes.Number, label: "Rule_ID" },
+      ];
+      
+      const rl1TargetFields: TargetFieldType[] = [
+          {name: 'RECORD_ID', type: FieldTypes.Number, bindedFields: [], expression: '' },
+          {name: 'RECORD_TYPE', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'MEMBER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'CARRIER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'ACCOUNT_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'GROUP_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'PA_NUMBER', type: FieldTypes.Number, bindedFields: [], expression: ''  },
+          {name: 'EFFECTIVE_DATE', type: FieldTypes.Date, bindedFields: [], expression: ''  },
+      ];
+      
+      const drugSourceFields: SourceFieldType[] = [
+          { type: FieldTypes.Number, label: "RECORD_ID" },
+          { type: FieldTypes.Text, label: "Drug_Type" },
+          { type: FieldTypes.Text, label: "Member_Number" },
+          { type: FieldTypes.Text, label: "Group_Number" },
+          { type: FieldTypes.Text, label: "Person_Number" },
+          { type: FieldTypes.Text, label: "Relationship" },
+          { type: FieldTypes.Date, label: "Date_of_Birth" },
+          { type: FieldTypes.Text, label: "Patient_Sex" },
+          { type: FieldTypes.Text, label: "Drug_Number" },
+          { type: FieldTypes.Number, label: "Filter" },
+          { type: FieldTypes.Text, label: "Cat_Code" },
+          { type: FieldTypes.Number, label: "Rule_ID" },
+        ];
+        
+        const drugTargetFields: TargetFieldType[] = [
+            {name: 'RECORD_ID', type: FieldTypes.Number, bindedFields: [], expression: '' },
+            {name: 'DRUG_TYPE', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+            {name: 'MEMBER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+            {name: 'CARRIER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+            {name: 'ACCOUNT_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+            {name: 'GROUP_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+            {name: 'PA_NUMBER', type: FieldTypes.Number, bindedFields: [], expression: ''  },
+            {name: 'EFFECTIVE_DATE', type: FieldTypes.Date, bindedFields: [], expression: ''  },
+        ];
+
+        const eligibilitySourceFields: SourceFieldType[] = [
+            { type: FieldTypes.Number, label: "RECORD_ID" },
+            { type: FieldTypes.Text, label: "Eligibility_Type" },
+            { type: FieldTypes.Text, label: "Member_Number" },
+            { type: FieldTypes.Text, label: "Group_Number" },
+            { type: FieldTypes.Text, label: "Person_Number" },
+            { type: FieldTypes.Text, label: "Relationship" },
+            { type: FieldTypes.Date, label: "Date_of_Birth" },
+            { type: FieldTypes.Text, label: "Patient_Sex" },
+            { type: FieldTypes.Text, label: "Drug_Type" },
+            { type: FieldTypes.Text, label: "Drug_Number" },
+            { type: FieldTypes.Number, label: "Filter" },
+            { type: FieldTypes.Text, label: "Cat_Code" },
+            { type: FieldTypes.Number, label: "Rule_ID" },
+          ];
+          
+          const eligibilityTargetFields: TargetFieldType[] = [
+              {name: 'RECORD_ID', type: FieldTypes.Number, bindedFields: [], expression: '' },
+              {name: 'ELIGIBILITY_TYPE', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+              {name: 'MEMBER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+              {name: 'CARRIER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+              {name: 'ACCOUNT_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+              {name: 'GROUP_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+              {name: 'PA_NUMBER', type: FieldTypes.Number, bindedFields: [], expression: ''  },
+              {name: 'EFFECTIVE_DATE', type: FieldTypes.Date, bindedFields: [], expression: ''  },
+          ];
+      
+
     const handleClickOpen = (editingRule: string) => () => {
         // scrollType: DialogProps['scroll']
+        switch(editingRule){
+            case 'RL1 Transform':
+                setSourceFields(rl1SourceFields);
+                setTargetFields(rl1TargetFields);
+                break;
+            case 'Drug Transform':
+                setSourceFields(drugSourceFields);
+                setTargetFields(drugTargetFields);
+                break;
+            case 'Eligibility Transform':
+                setSourceFields(eligibilitySourceFields);
+                setTargetFields(eligibilityTargetFields);
+                break;
+        }
         setCurrentEditingRule(editingRule);
         setOpen(true);
         setScroll('paper'); //scrollType);
@@ -92,21 +192,7 @@ export function MappingRules(): React.JSX.Element {
                     </DialogTitle>
                     
                     <DialogContent dividers={scroll === 'paper'}>
-                        <EditMapping />
-                        {/* <DialogContentText
-                            id="scroll-dialog-description"
-                            ref={descriptionElementRef}
-                            tabIndex={-1}
-                        >
-                            {[...new Array(50)]
-                                .map(
-                                    () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
-                                )
-                                .join('\n')}
-                        </DialogContentText> */}
+                        <EditMapping sourceFields={sourceFields} targetFields={targetFields}/>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={handleClose}>Cancel</Button>
@@ -116,7 +202,5 @@ Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
                 <Divider />
             </Card>
         </form>
-
     );
-
 }
