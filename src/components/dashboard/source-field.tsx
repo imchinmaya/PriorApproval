@@ -1,11 +1,11 @@
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { ListItem } from '@mui/material'
 import type { CSSProperties, FC } from 'react'
 import { memo } from 'react'
 import { useDrag } from 'react-dnd'
 import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PinIcon from '@mui/icons-material/Pin';
-import { FieldTypes } from './prior-approval/field-types';
+import { FieldTypes } from './prior-approval/interfaces/mapping-types';
 
 // const style: CSSProperties = {
 //   border: '1px dashed gray',
@@ -54,20 +54,7 @@ export const SourceField: FC<SourceFieldProps> = memo(function Box({ name, type,
           {(type == FieldTypes.Number) && <PinIcon />}
 
           <span style={{'marginLeft': '10px'}}>{name}</span>
-      {/* <ListItemButton sx={{'padding': '1px 5px'}}>
-        <ListItemIcon sx={{'min-width': '36px'}}>
-        
-          
-          
-        </ListItemIcon>
-        <ListItemText primary={name} /> 
-      </ListItemButton>*/}
       </div>
     </ListItem>
-    
-
-    // <div ref={drag} style={{ ...style, opacity }} data-testid="box">
-    //   {isDropped ? <s>{name}</s> : name}
-    // </div>
   )
 })

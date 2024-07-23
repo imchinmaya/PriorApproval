@@ -9,8 +9,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogProps, DialogTitle, Link, Typography } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { EditMapping } from './edit-mapping';
-import { SourceFieldType, TargetFieldType } from './interfaces/prior-approval-infaces';
-import { FieldTypes } from './field-types';
+import { FieldTypes, SourceFieldType, TargetFieldType } from './interfaces/mapping-types';
 
 export function MappingRules(): React.JSX.Element {
     const [open, setOpen] = React.useState(false);
@@ -49,7 +48,7 @@ export function MappingRules(): React.JSX.Element {
           {name: 'CARRIER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
           {name: 'ACCOUNT_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
           {name: 'GROUP_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
-          {name: 'PA_NUMBER', type: FieldTypes.Number, bindedFields: [], expression: ''  },
+          {name: 'PA_NUMBER', type: FieldTypes.AlphaNumeric, bindedFields: [], expression: ''  },
           {name: 'EFFECTIVE_DATE', type: FieldTypes.Date, bindedFields: [], expression: ''  },
       ];
       

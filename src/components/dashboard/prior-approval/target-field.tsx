@@ -1,14 +1,7 @@
 import type { CSSProperties, FC } from 'react'
 import { useDrop } from 'react-dnd'
-
-import { FieldTypes } from './field-types'
 import { Chip, TextField } from '@mui/material'
 import './splitter.css';
-// const useStyles = makeStyles(theme => ({
-//   chip: {
-//     margin: theme.spacing(0.5, 0.25)
-//   }
-// }));
 
 const style: CSSProperties = {
   color: 'blue',
@@ -22,7 +15,7 @@ const style: CSSProperties = {
 }
 
 export interface TargetFieldProps {
-  type: string
+  acceptedSourceTypes: string[]
   allowedDropEffect: string,
   bindedFields: string[],
   expression: string,
@@ -40,11 +33,11 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
 }
 
 export const TargetField: FC<TargetFieldProps> = (
-    { type, allowedDropEffect, bindedFields, onDrop }
+    { acceptedSourceTypes, allowedDropEffect, bindedFields, onDrop }
   ) => {
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
-      accept: type, // FieldTypes.BOX,
+      accept: acceptedSourceTypes, // FieldTypes.BOX,
       drop: onDrop,
       // drop: () => ({
       //   name: `${allowedDropEffect} Dustbin`,

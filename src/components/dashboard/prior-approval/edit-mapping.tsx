@@ -2,8 +2,7 @@
 
 import update from 'immutability-helper'
 import {
-  Accordion, AccordionDetails, AccordionSummary, Card, CardContent, CardHeader, Divider, List,
-  ListItem, ListItemButton, ListItemIcon, ListItemText, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  Accordion, AccordionDetails, AccordionSummary, List, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
   Typography
 } from "@mui/material";
 // import { makeStyles} from "@mui/styles"
@@ -16,10 +15,10 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { SourceField } from "../source-field";
 import { TargetField } from "./target-field";
-import { FieldTypes } from "./field-types";
 import ExpandMoreIcon  from "@mui/icons-material/ExpandMore";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
-import { SourceFieldType, TargetFieldType } from './interfaces/prior-approval-infaces';
+import { FieldTypes, SourceFieldType, TargetFieldType } from './interfaces/mapping-types';
+import { AutofpsSelect } from '@mui/icons-material';
 
 interface EditMappingProps {
   sourceFields: SourceFieldType[]; // { type: string, label: string }[],
@@ -60,6 +59,14 @@ export function EditMapping({sourceFields, targetFields}: EditMappingProps): Rea
       setExpanded(newExpanded ? panel : false);
     };
 
+  function getAcceptedSourceTypes(targetType: string) {
+    switch(targetType){
+      case FieldTypes.AlphaNumeric:
+        return [FieldTypes.Number, FieldTypes.Text];
+      default:
+        return [targetType];
+    }
+  }   
 
   const handleDrop = useCallback(
     (index: number, item: { name: string }) => {
@@ -148,11 +155,12 @@ export function EditMapping({sourceFields, targetFields}: EditMappingProps): Rea
                             {((row.bindedFields.length > 0 || row.expression.length > 0) && row.type == FieldTypes.Text) && <FontDownloadIcon />}
                             {((row.bindedFields.length > 0 || row.expression.length > 0) && row.type == FieldTypes.Date) && <DateRangeIcon />}
                             {((row.bindedFields.length > 0 || row.expression.length > 0) && row.type == FieldTypes.Number) && <PinIcon />}
+                            {((row.bindedFields.length > 0 || row.expression.length > 0) && row.type == FieldTypes.AlphaNumeric) && <AutofpsSelect />}
                             {(row.bindedFields.length == 0 && row.expression.length == 0) && <ReportProblemIcon />}
                           </TableCell>
                           <TableCell align="left" >
                             <TargetField
-                              type={row.type}
+                              acceptedSourceTypes={getAcceptedSourceTypes(row.type)}
                               bindedFields={row.bindedFields}
                               expression=""
                               allowedDropEffect="any"
