@@ -24,3 +24,12 @@
   position: relative;
   z-index: 1;
 }
+
+
+.chip{
+  margin: 0.5 0.25;
+}
+
+.nopadding{
+  padding: 0;
+}

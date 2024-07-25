@@ -1,21 +1,25 @@
 import type { CSSProperties, FC } from 'react'
 import { useDrop } from 'react-dnd'
-
-import { FieldTypes } from './field-types'
+import { Chip, TextField } from '@mui/material'
+import './splitter.css';
 
 const style: CSSProperties = {
   color: 'blue',
-  padding: '1rem',
+  padding: '5px',
   textAlign: 'left',
   fontSize: '1rem',
   lineHeight: 'normal',
   float: 'left',
-  width: '100%'
+  width: '100%',
+  border: '0px'
 }
 
-export interface TargetFeildProps {
-  type: string
-  allowedDropEffect: string
+export interface TargetFieldProps {
+  acceptedSourceTypes: string[]
+  allowedDropEffect: string,
+  bindedFields: string[],
+  expression: string,
+  onDrop: (item: any) => void
 }
 
 function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
@@ -28,14 +32,17 @@ function selectBackgroundColor(isActive: boolean, canDrop: boolean) {
   }
 }
 
-export const TargetField: FC<TargetFeildProps> = ({ type, allowedDropEffect }) => {
+export const TargetField: FC<TargetFieldProps> = (
+    { acceptedSourceTypes, allowedDropEffect, bindedFields, onDrop }
+  ) => {
   const [{ canDrop, isOver }, drop] = useDrop(
     () => ({
-      accept: type, // FieldTypes.BOX,
-      drop: () => ({
-        name: `${allowedDropEffect} Dustbin`,
-        allowedDropEffect,
-      }),
+      accept: acceptedSourceTypes, // FieldTypes.BOX,
+      drop: onDrop,
+      // drop: () => ({
+      //   name: `${allowedDropEffect} Dustbin`,
+      //   allowedDropEffect,
+      // }),
       collect: (monitor: any) => ({
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
@@ -44,14 +51,42 @@ export const TargetField: FC<TargetFeildProps> = ({ type, allowedDropEffect }) =
     [allowedDropEffect],
   )
 
+
+  const handleDelete = (item: string) => () => {
+    //const newSelectedItem = [...bindedFields];
+    //newSelectedItem.splice(newSelectedItem.indexOf(item), 1);
+    //setSelectedItem(newSelectedItem);
+  };
+
+
   const isActive = canDrop && isOver
   const backgroundColor = selectBackgroundColor(isActive, canDrop)
   return (
     <div ref={drop} style={{ ...style, backgroundColor }}>
-      null
-      {/* {`Works with ${allowedDropEffect} drop effect`}
-      <br />
-      {isActive ? 'Release to drop' : 'Drag a box here'} */}
+      <TextField
+        variant="standard"
+        InputProps={{
+          disableUnderline: true,
+          startAdornment: bindedFields.map(item => (
+            <Chip
+              key={item}
+              tabIndex={-1}
+              label={item}
+              className='chip'
+              onDelete={handleDelete(item)}
+            />
+          )),
+          // onBlur,
+          // onChange: event => {
+          //   handleInputChange(event);
+          //   onChange(event);
+          // },
+          // onFocus
+        }}
+        //{...other}
+        //{...inputProps}
+        sx={{'width': '100%'}}
+      />
     </div>
   )
 }

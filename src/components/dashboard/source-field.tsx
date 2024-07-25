@@ -1,11 +1,11 @@
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import { ListItem } from '@mui/material'
 import type { CSSProperties, FC } from 'react'
 import { memo } from 'react'
 import { useDrag } from 'react-dnd'
 import FontDownloadIcon from '@mui/icons-material/FontDownload';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import PinIcon from '@mui/icons-material/Pin';
-import { FieldTypes } from './prior-approval/field-types';
+import { FieldTypes } from './prior-approval/interfaces/mapping-types';
 
 // const style: CSSProperties = {
 //   border: '1px dashed gray',
@@ -20,7 +20,7 @@ import { FieldTypes } from './prior-approval/field-types';
 const style: CSSProperties = {
   border: '1px dashed gray',
   backgroundColor: 'white',
-  padding: '0.2rem',
+  padding: '1px',
   marginRight: '0.2rem',
   marginBottom: '0.2rem',
   cursor: 'move',
@@ -46,19 +46,15 @@ export const SourceField: FC<SourceFieldProps> = memo(function Box({ name, type,
   )
 
   return (
-    <ListItem disablePadding ref={drag} style={{ ...style, opacity }} data-testid="box">
-      <ListItemButton>
-        <ListItemIcon>
+    
+    <ListItem disablePadding style={{ ...style, opacity }}>
+      <div style={{'width': '100%', 'display':'flex', 'alignItems': 'center', 'padding': '5px 10px'}} ref={drag}  data-testid="box">
           {(type == FieldTypes.Text) && <FontDownloadIcon />}
           {(type == FieldTypes.Date) && <DateRangeIcon />}
           {(type == FieldTypes.Number) && <PinIcon />}
-        </ListItemIcon>
-        <ListItemText primary={name} />
-      </ListItemButton>
-    </ListItem>
 
-    // <div ref={drag} style={{ ...style, opacity }} data-testid="box">
-    //   {isDropped ? <s>{name}</s> : name}
-    // </div>
+          <span style={{'marginLeft': '10px'}}>{name}</span>
+      </div>
+    </ListItem>
   )
 })

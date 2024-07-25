@@ -206,6 +206,10 @@ export function PAWizard(): React.JSX.Element {
 
   const renderStepper = () => {
     return (<Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector/>}>
+            <Step key="MappingRules">
+        <StepLabel StepIconComponent={ColorlibStepIcon}>Mapping Rules</StepLabel>
+      </Step>
+
       <Step key="DefineConfigParameters">
         <StepLabel StepIconComponent={ColorlibStepIcon}>Define Config Parameters</StepLabel>
       </Step>
@@ -218,9 +222,9 @@ export function PAWizard(): React.JSX.Element {
       <Step key="OptionalLookups">
         <StepLabel StepIconComponent={ColorlibStepIcon}>Optional Lookups</StepLabel>
       </Step>
-      <Step key="MappingRules">
+      {/* <Step key="MappingRules">
         <StepLabel StepIconComponent={ColorlibStepIcon}>Mapping Rules</StepLabel>
-      </Step>
+      </Step> */}
       {wizardData.configParameters.clientEnvironment == 'bk2' ? <Step key="UHCMultipleHCRHDHP">
         <StepLabel StepIconComponent={ColorlibStepIcon}>UHC-Multiple HCR/HDHP</StepLabel>
       </Step>:null}
@@ -236,9 +240,37 @@ export function PAWizard(): React.JSX.Element {
     //     return <div>Unknown step</div>;
     // }
   };
+  // const renderActiveStep = () => {
+  //   switch (activeStep) {
+  //     case 0:
+  //       return <DefineConfigParameters 
+        
+  //       configParameters={wizardData.configParameters}
+  //       updateWizardData={updateWizardData}
+  //         //onClientEnvironmentChange={handleClientEnvironmentChange}
+  //         ref={defineConfigRef} 
+  //         />;
+  //     case 1:
+  //       return <SourceFileInfo />;
+  //     case 2:
+  //       return <MandatoryLookup />
+  //     case 3:
+  //       return <OptionalLookup />
+  //     case 4:
+  //       return <MappingRules />
+  //     case 5:
+  //       return <MultpleHDRHDHP />;
+  //     case 6:
+  //       return <ExecuteMapProcess />;
+  //     // Case for other steps...
+  //     default:
+  //       return <div>Unknown step</div>;
+  //   }
+  // }
+
   const renderActiveStep = () => {
     switch (activeStep) {
-      case 0:
+      case 4:
         return <DefineConfigParameters 
         
         configParameters={wizardData.configParameters}
@@ -252,7 +284,7 @@ export function PAWizard(): React.JSX.Element {
         return <MandatoryLookup />
       case 3:
         return <OptionalLookup />
-      case 4:
+      case 0:
         return <MappingRules />
       case 5:
         return <MultpleHDRHDHP />;
