@@ -43,7 +43,7 @@ export function MappingRules(): React.JSX.Element {
       
       const rl1TargetFields: TargetFieldType[] = [
           {name: 'RECORD_ID', type: FieldTypes.Number, bindedFields: [], expression: '' },
-          {name: 'RECORD_TYPE', type: FieldTypes.Text, bindedFields: [], expression: ''  },
+          {name: 'RECORD_TYPE', type: FieldTypes.Text, bindedFields: ['8.6'], expression: ''  },
           {name: 'MEMBER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
           {name: 'CARRIER_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },
           {name: 'ACCOUNT_ID', type: FieldTypes.Text, bindedFields: [], expression: ''  },

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import Stack from '@mui/material/Stack';
-import { EditMapping } from '@/components/dashboard/prior-approval/edit-mapping';
+import FilmsComponent from './film-component';
 
 export default function Page(): React.JSX.Element {
     return (
         <Stack spacing={3}>
-            <EditMapping />
+            <FilmsComponent />
         </Stack>
     );
 }
